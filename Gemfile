@@ -46,3 +46,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Figaro helps setting environment variables
 gem 'figaro'
+
+# Shows test coverage
+gem 'simplecov', require: false, group: :test
