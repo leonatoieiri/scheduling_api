@@ -18,6 +18,14 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
     assert_response 201
   end
 
+  test "should not create room" do
+    assert_no_difference('Room.count') do
+      post rooms_url, params: { room: { name: ''} }, as: :json
+    end
+
+    assert_response 422
+  end
+
   test "should show room" do
     get room_url(@room), as: :json
     assert_response :success
@@ -26,6 +34,11 @@ class RoomsControllerTest < ActionDispatch::IntegrationTest
   test "should update room" do
     patch room_url(@room), params: { room: { name: @room.name } }, as: :json
     assert_response 200
+  end
+
+  test "should not update room" do
+    patch room_url(@room), params: { room: { name: '' } }, as: :json
+    assert_response 422
   end
 
   test "should destroy room" do
