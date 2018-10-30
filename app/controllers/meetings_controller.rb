@@ -1,5 +1,6 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :update, :destroy]
+  before_action :save_log
 
   # GET /meetings
   def index
@@ -47,5 +48,9 @@ class MeetingsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def meeting_params
       params.require(:meeting).permit(:title, :room_id, :start_time, :end_time)
+    end
+
+    def save_log
+      ActionLog.create(controller: 'Meeting', action: action_name, params: params)
     end
 end

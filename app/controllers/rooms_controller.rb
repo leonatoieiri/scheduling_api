@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: [:show, :update, :destroy]
+  before_action :save_log
 
   # GET /rooms
   def index
@@ -47,5 +48,9 @@ class RoomsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def room_params
       params.require(:room).permit(:name)
+    end
+
+    def save_log
+      ActionLog.create(controller: 'Rooms', action: action_name, params: params)
     end
 end
