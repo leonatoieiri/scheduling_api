@@ -5,6 +5,17 @@ class MeetingsController < ApplicationController
   # GET /meetings
   def index
     @meetings = Meeting.all
+    if params["room_id"]
+      @meetings = @meetings.where(room_id: params["room_id"])
+    end
+    if params["start_time"]
+      @meetings = @meetings.where("start_time < ? and ? < end_time",
+        params["start_time"], params["start_time"])
+    end
+    if params["end_time"]
+      @meetings = @meetings.where("start_time < ? and ? < end_time",
+        params["end_time"], params["end_time"])
+    end
 
     render json: @meetings
   end
